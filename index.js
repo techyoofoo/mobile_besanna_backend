@@ -6,7 +6,19 @@ import {
   GetUserByEmailId,
   InactiveUserAccount
 } from "./controller/shopify-user-controller";
-import { CreateMarket, GetAllMarkets,GetMarketDataByName, InActivateMarketName } from "./controller/market-controller";
+import {
+  CreateMarket,
+  GetAllMarkets,
+  GetMarketDataByName,
+  InActivateMarketName
+} from "./controller/market-controller";
+import {
+  CreateCompany,
+  GetAllCompanies,
+  GetCompanyDataByName,
+  InActivateCompanyName
+} from "./controller/company-controller";
+import { CreateApplicationType } from "./controller/application-type-controller";
 
 mongoose
   .connect(
@@ -80,24 +92,59 @@ server.route({
 });
 
 server.route({
-  method:"GET",
-  path:"/get-all-markets",
+  method: "GET",
+  path: "/get-all-markets",
   handler: GetAllMarkets
-})
+});
 
 server.route({
-  method:"GET",
-  path:"/get-market-by-name/{market_name}",
-  handler:GetMarketDataByName
-})
+  method: "GET",
+  path: "/get-market-by-name/{market_name}",
+  handler: GetMarketDataByName
+});
 
 server.route({
-  method:"GET",
-  path:"/in-active-market-by-name/{market_name}",
-  handler:InActivateMarketName
-})
+  method: "GET",
+  path: "/in-active-market-by-name/{market_name}",
+  handler: InActivateMarketName
+});
 
 //---------------------------------------Market REST Services ENDS---------------------------------
+
+//---------------------------------------Company REST Services START--------------------------------
+
+server.route({
+  method: "POST",
+  path: "/create-company",
+  handler: CreateCompany
+});
+
+server.route({
+  method: "GET",
+  path: "/get-all-companies",
+  handler: GetAllCompanies
+});
+
+server.route({
+  method: "GET",
+  path: "/get-companies-by-name/{Company_name}",
+  handler: GetCompanyDataByName
+});
+
+server.route({
+  method: "GET",
+  path: "/in-active-companies-by-name/{Company_name}",
+  handler: InActivateCompanyName
+});
+
+//---------------------------------------Company REST Services ENDS---------------------------------
+
+//
+server.route({
+  method: "POST",
+  path: "/create-app-type",
+  handler: CreateApplicationType
+});
 
 process.on("unhandledRejection", err => {
   console.log(err);
