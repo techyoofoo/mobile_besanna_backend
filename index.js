@@ -19,6 +19,11 @@ import {
   InActivateCompanyName
 } from "./controller/company-controller";
 import { CreateApplicationType } from "./controller/application-type-controller";
+import { CreateEmotionType } from "./controller/emotion-type-controller";
+import { CreateGenderType } from "./controller/gender-type-controller";
+import { CreateFragranceType } from "./controller/fragrance-type-controller";
+import { CreateUsageType } from "./controller/usage-type-controller";
+import { CreateProductType } from "./controller/product-type-controller";
 
 mongoose
   .connect(
@@ -139,12 +144,54 @@ server.route({
 
 //---------------------------------------Company REST Services ENDS---------------------------------
 
-//
+//--------------------------------------Create Application Type Starts-------------------------------------
 server.route({
   method: "POST",
   path: "/create-app-type",
   handler: CreateApplicationType
 });
+//--------------------------------------Create Application Type Ends-------------------------------------
+
+//--------------------------------------Create Emotion Type Start-------------------------------------
+server.route({
+  method: "POST",
+  path: "/create-emotion-type",
+  handler: CreateEmotionType
+});
+//--------------------------------------Create Emotion Type Ends-------------------------------------
+
+//--------------------------------------Create Gender Type Start-------------------------------------
+server.route({
+  method: "POST",
+  path: "/create-gender-type",
+  handler: CreateGenderType
+});
+//--------------------------------------Create Gender Type Ends-------------------------------------
+//--------------------------------------Create Fragrance Type Start-------------------------------------
+server.route({
+  method: "POST",
+  path: "/create-fragrance-type",
+  handler: CreateFragranceType
+});
+//--------------------------------------Create Fragrance Type Ends-------------------------------------
+
+//--------------------------------------Create Usage Type Start-------------------------------------
+server.route({
+  method: "POST",
+  path: "/create-usage-type",
+  handler: CreateUsageType
+});
+//--------------------------------------Create Usage Type Ends-------------------------------------
+
+//--------------------------------------Create Product Type Start-------------------------------------
+server.route({
+  method: "POST",
+  path: "/create-product-type",
+  handler: CreateProductType
+});
+//--------------------------------------Create Product Type Ends-------------------------------------
+
+
 
 process.on("unhandledRejection", err => {
   console.log(err);
