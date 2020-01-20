@@ -1,20 +1,31 @@
 import mongoose, { Schema } from "mongoose";
+var Int32 = require("mongoose-int32");
 
 const productSchema = new Schema(
   {
-    oil_category: { type: String },
-    oil_type: { type: String },
+    company_id: { type: Schema.Types.ObjectId, ref: "Company" },
+    name: { type: String },
     short_description: { type: String },
     long_description: { type: String },
-    primary_benfits: { type: String },
-    directions: { type: Array },
+    benfits: { type: String },
+    directions: { type: String },
     cautions: { type: String },
-    uses: { type: Array },
     mind: { type: String },
-    positive_emotions_address: { type: String },
-    negative_emotions_address: { type: String },
-    data_body: { type: String },
-    complimentary: { type: String }
+    positives: { type: String },
+    negatives: { type: String },
+    product_body: { type: String },
+    complimentary: { type: Schema.Types.ObjectId, ref: "Product" },
+    alternatives: { type: Schema.Types.ObjectId, ref: "Product" },
+    excluded_markets: [{ type: Schema.Types.ObjectId, ref: "Market" }],
+    productTypeFlags: Int32,
+    usageTypeFlags: Int32,
+    fragranceTypeFlags: Int32,
+    genderTypeFlags: Int32,
+    emotionTypeFlags: Int32,
+    applicationTypeFlags: Int32,
+    stimulantCommand: [Int32],
+    frequency: Int32,
+    image_path: { type: String }
   },
   {
     timestamps: true
@@ -24,19 +35,29 @@ const productSchema = new Schema(
 productSchema.methods = {
   view(full) {
     const view = {
-      oil_category: this.oil_category,
-      oil_type: this.oil_type,
+      id: this.id,
+      company_id: this.company_id,
       short_description: this.short_description,
       long_description: this.long_description,
-      primary_benfits: this.primary_benfits,
+      benfits: this.benfits,
       directions: this.directions,
       cautions: this.cautions,
-      uses: this.uses,
       mind: this.mind,
-      positive_emotions_address: this.positive_emotions_address,
-      negative_emotions_address: this.negative_emotions_address,
-      data_body: this.data_body,
-      complimentary: this.complimentary
+      positives: this.positives,
+      negatives: this.negatives,
+      product_body: this.product_body,
+      complimentary: this.complimentary,
+      alternatives: this.alternatives,
+      excluded_markets: this.excluded_markets,
+      productTypeFlags: this.productTypeFlags,
+      usageTypeFlags: this.usageTypeFlags,
+      fragranceTypeFlags: this.fragranceTypeFlags,
+      genderTypeFlags: this.genderTypeFlags,
+      emotionTypeFlags: this.emotionTypeFlags,
+      applicationTypeFlags: this.applicationTypeFlags,
+      stimulantCommand: this.stimulantCommand,
+      frequency: this.frequency,
+      image_path: this.image_path
     };
     return full
       ? {

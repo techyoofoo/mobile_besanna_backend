@@ -5,7 +5,7 @@ export const CreateProducts = async (request, h) => {
     const productPayload = new ProductInfo(request.payload);
     const saveProductData = await productPayload.save();
 
-    return h.response({Message: saveProductData.oil_type + " Saved Successfully",  status: 200});
+    return h.response({Message: saveProductData + " Saved Successfully",  status: 200});
   } catch (error) {
     return h.response(error).code(500);
   }

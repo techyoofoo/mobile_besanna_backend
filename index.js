@@ -24,6 +24,8 @@ import { CreateGenderType } from "./controller/gender-type-controller";
 import { CreateFragranceType } from "./controller/fragrance-type-controller";
 import { CreateUsageType } from "./controller/usage-type-controller";
 import { CreateProductType } from "./controller/product-type-controller";
+import { CreateProducts } from './controller/product-controller';
+import {CreateFirendRequest, FetchAllFriendsList} from './controller/add-friend-controller';
 
 mongoose
   .connect(
@@ -191,7 +193,27 @@ server.route({
 });
 //--------------------------------------Create Product Type Ends-------------------------------------
 
+//---Create a product------
+server.route({
+  method:"POST",
+  path:"/create-a-product",
+  handler: CreateProducts
+})
+//---------------------------
 
+//---------------------Friend list CRUD start----------------------------
+server.route({
+  method:"POST",
+  path:"/add-a-friend",
+  handler: CreateFirendRequest
+})
+
+server.route({
+  method:"GET",
+  path:"/fetch-all-friends",
+  handler:FetchAllFriendsList
+})
+//-------------------- Friend LIST CRUD ends-----------------------------
 
 process.on("unhandledRejection", err => {
   console.log(err);
