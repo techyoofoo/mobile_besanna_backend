@@ -24,7 +24,7 @@ import { CreateGenderType } from "./controller/gender-type-controller";
 import { CreateFragranceType } from "./controller/fragrance-type-controller";
 import { CreateUsageType } from "./controller/usage-type-controller";
 import { CreateProductType } from "./controller/product-type-controller";
-import { CreateProducts } from './controller/product-controller';
+import { CreateProducts, GetAllProducts, GetProductsByName } from './controller/product-controller';
 import {CreateFirendRequest, FetchAllFriendsList} from './controller/add-friend-controller';
 
 mongoose
@@ -198,6 +198,17 @@ server.route({
   method:"POST",
   path:"/create-a-product",
   handler: CreateProducts
+})
+
+server.route({
+  method:"GET",
+  path:"/get-all-products",
+  handler: GetAllProducts
+})
+server.route({
+  method:"GET",
+  path:"/get-product-by-name/{product_name}",
+  handler:GetProductsByName
 })
 //---------------------------
 

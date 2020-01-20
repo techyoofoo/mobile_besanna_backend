@@ -3,7 +3,8 @@ var Int32 = require("mongoose-int32");
 
 const productSchema = new Schema(
   {
-    company_id: { type: Schema.Types.ObjectId, ref: "Company" },
+    // company_id: { type: Schema.Types.ObjectId, ref: "Company" },
+    company_id:{type:Number},
     name: { type: String },
     short_description: { type: String },
     long_description: { type: String },
@@ -14,8 +15,8 @@ const productSchema = new Schema(
     positives: { type: String },
     negatives: { type: String },
     product_body: { type: String },
-    complimentary: { type: Schema.Types.ObjectId, ref: "Product" },
-    alternatives: { type: Schema.Types.ObjectId, ref: "Product" },
+    complimentary: { type: String },//{ type: Schema.Types.ObjectId, ref: "Product" },
+    alternatives: {type: String},//{ type: Schema.Types.ObjectId, ref: "Product" },
     excluded_markets: [{ type: Schema.Types.ObjectId, ref: "Market" }],
     productTypeFlags: Int32,
     usageTypeFlags: Int32,
@@ -25,7 +26,14 @@ const productSchema = new Schema(
     applicationTypeFlags: Int32,
     stimulantCommand: [Int32],
     frequency: Int32,
-    image_path: { type: String }
+    image_path: { type: String },
+    uses: { type: String },
+    Aromatic: { type: Number, enum: [1, 0], default: 1 },
+    Topically: { type: Number, enum: [1, 0], default: 1 },
+    internally: { type: Number, enum: [1, 0], default: 1 },
+    Dilute: { type: Number, enum: [1, 0], default: 1 },
+    youngskin: { type: Number, enum: [1, 0], default: 1 },
+    nodilution: { type: Number, enum: [1, 0], default: 1 }
   },
   {
     timestamps: true
@@ -57,7 +65,14 @@ productSchema.methods = {
       applicationTypeFlags: this.applicationTypeFlags,
       stimulantCommand: this.stimulantCommand,
       frequency: this.frequency,
-      image_path: this.image_path
+      image_path: this.image_path,
+      uses: this.uses,
+      Aromatic: this.Aromatic,
+    Topically: this.Topically,
+    internally: this.internally,
+    Dilute: this.Dilute,
+    youngskin:this.youngskin,
+    nodilution: this.nodilution
     };
     return full
       ? {
