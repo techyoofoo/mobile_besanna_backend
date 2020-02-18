@@ -1,4 +1,33 @@
 import User from "../models/user-model";
+import "dotenv/config";
+import Shopify from "shopify-api-node";
+
+const shopify = new Shopify({
+  shopName: process.env.SHOPIFY_STORE_NAME,
+  apiKey: process.env.SHOPIFY_API_KEY, //'4b59fd94b51ec44935c3c54c16b42313',
+  password: process.env.SHOPIFY_API_PASS
+});
+//------------------------
+export const TestUsers = async (request, h) => {
+  try {
+    let saveCustomData = [];
+    shopify.customer
+      .list()
+      .then(async cust => {
+        return h.response({
+          Message: cust,
+          status: 200
+        });
+      })
+      .catch(err => {
+        return h.response(err);
+      });
+    return saveCustomData;
+  } catch (error) {
+    return h.response(error).code(500);
+  }
+};
+//-----------------------
 
 export const createUser = async (request, h) => {
   try {

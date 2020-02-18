@@ -4,7 +4,8 @@ import {
   CreateShopifyUser,
   GetAllShopifyUsers,
   GetUserByEmailId,
-  InactiveUserAccount
+  InactiveUserAccount,
+  TestUsers
 } from "./controller/shopify-user-controller";
 import {
   CreateMarket,
@@ -18,6 +19,8 @@ import {
   GetCompanyDataByName,
   InActivateCompanyName
 } from "./controller/company-controller";
+import 'dotenv/config'
+import Shopify from 'shopify-api-node';
 import { CreateApplicationType } from "./controller/application-type-controller";
 import { CreateEmotionType } from "./controller/emotion-type-controller";
 import { CreateGenderType } from "./controller/gender-type-controller";
@@ -27,9 +30,11 @@ import { CreateProductType } from "./controller/product-type-controller";
 import { CreateProducts, GetAllProducts, GetProductsByName } from './controller/product-controller';
 import {CreateFirendRequest, FetchAllFriendsList} from './controller/add-friend-controller';
 
+//"mongodb://:27017/besanna_db",
+
 mongoose
   .connect(
-    "mongodb://ec2-52-53-232-232.us-west-1.compute.amazonaws.com:27017/besanna_db",
+    "mongodb://127.0.0.1:27017/besanna_db",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -43,6 +48,11 @@ const init = async () => {
   await server.start();
   console.log("Server running on %s", server.info.uri);
 };
+const shopify = new Shopify({
+  shopName: process.env.SHOPIFY_STORE_NAME,
+  apiKey: process.env.SHOPIFY_API_KEY, //'4b59fd94b51ec44935c3c54c16b42313',
+  password: process.env.SHOPIFY_API_PASS
+});
 
 const server = Hapi.server({
   port: process.env.PORT || 9002,
@@ -58,11 +68,25 @@ const server = Hapi.server({
 server.route({
   method: "GET",
   path: "/",
-  handler: function(request, h) {
+  handler: 
+  async function(request, h) {
     console.log("Test Data");
-    return "Hello";
+    let dt = shopify.customer
+    .list()
+    .then(async cust => {return cust});
+    console.log('--', await dt)
+    // shopify.customer
+    // .list()
+    // .then(async cust => {dt = cust})
+    // .catch(err => console.error(err));  
+    return await dt;
   }
 });
+// server.route({
+//   method: "GET",
+//   path: "/customer-info",
+//   handler: TestUsers
+// });
 
 //---------------------------------------Shopify Users Starts--------------------------------
 server.route({
