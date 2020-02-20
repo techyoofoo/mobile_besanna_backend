@@ -29,6 +29,7 @@ import { CreateUsageType } from "./controller/usage-type-controller";
 import { CreateProductType } from "./controller/product-type-controller";
 import { CreateProducts, GetAllProducts, GetProductsByName } from './controller/product-controller';
 import {CreateFirendRequest, FetchAllFriendsList} from './controller/add-friend-controller';
+import {CustomerDetails} from './shopify-controller/shopify-login'
 
 //"mongodb://:27017/besanna_db",
 
@@ -74,7 +75,7 @@ server.route({
     let dt = shopify.customer
     .list()
     .then(async cust => {return cust});
-    console.log('--', await dt)
+    console.log('--')
     // shopify.customer
     // .list()
     // .then(async cust => {dt = cust})
@@ -90,9 +91,9 @@ server.route({
 
 //---------------------------------------Shopify Users Starts--------------------------------
 server.route({
-  method: "POST",
-  path: "/create-shopify-user",
-  handler: CreateShopifyUser
+  method: "GET",
+  path: "/shopify-user",
+  handler: CustomerDetails
 });
 
 server.route({
